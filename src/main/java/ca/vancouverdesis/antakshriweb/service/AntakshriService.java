@@ -1,0 +1,53 @@
+package ca.vancouverdesis.antakshriweb.service;
+
+import ca.vancouverdesis.antakshriweb.domain.Buzzer;
+import org.springframework.stereotype.Service;
+
+import java.time.ZonedDateTime;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
+
+@Service
+public class AntakshriService {
+    private ConcurrentSkipListMap<ZonedDateTime, Buzzer> audienceMap;
+    private ConcurrentSkipListMap<ZonedDateTime, Buzzer> playerMap;
+    public AntakshriService() {
+        audienceMap = new ConcurrentSkipListMap<>(
+                Comparator.comparingLong(v -> v.toInstant().toEpochMilli()));
+        playerMap = new ConcurrentSkipListMap<>(
+                Comparator.comparingLong(v -> v.toInstant().toEpochMilli()));
+    }
+
+    public void addBuzzer(Buzzer buzzer) {
+        if("AUDIENCE".equalsIgnoreCase(buzzer.getTeamName())) {
+            audienceMap.put(ZonedDateTime.now(), buzzer);
+        } else {
+            playerMap.put(ZonedDateTime.now(), buzzer);
+        }
+    }
+
+    public void resetBuzzer() {
+        audienceMap.clear();
+    }
+
+    public Map<String, Map<Integer, Buzzer>> getBuzzers() {
+        Map<String, Map<Integer, Buzzer>> returnMap = new HashMap<>();
+        Map<Integer, Buzzer> buzzerMap = new HashMap<>();
+        Map<Integer, Buzzer> finalBuzzerMap = buzzerMap;
+        audienceMap.values().stream().toList().forEach(buzzer -> {
+            finalBuzzerMap.put(finalBuzzerMap.size() + 1, buzzer);
+        });
+        returnMap.put("AUDIENCE", buzzerMap);
+
+        buzzerMap = new HashMap<>();
+        Map<Integer, Buzzer> finalBuzzerMap1 = buzzerMap;
+        playerMap.values().stream().toList().forEach(buzzer -> {
+            finalBuzzerMap1.put(finalBuzzerMap1.size() + 1, buzzer);
+        });
+        returnMap.put("PLAYER", buzzerMap);
+
+        return returnMap;
+    }
+}
