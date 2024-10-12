@@ -16,78 +16,7 @@
 
 <div class="container">
     <div class="teams-container">
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team1-logo.png" alt="Team 1 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Deewane</div>
-                <div class="team-score">100</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team2-logo.png" alt="Team 2 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Parwaane</div>
-                <div class="team-score">400</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team3-logo.png" alt="Team 3 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Mastaane</div>
-                <div class="team-score">400</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team4-logo.png" alt="Team 4 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Afsaane</div>
-                <div class="team-score">350</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team5-logo.png" alt="Team 5 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Taraane</div>
-                <div class="team-score">100</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team6-logo.png" alt="Team 6 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Anjaane</div>
-                <div class="team-score">100</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team7-logo.png" alt="Team 7 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Suhaane</div>
-                <div class="team-score">100</div>
-            </div>
-        </div>
-        <div class="team-box">
-            <div class="team-logo">
-                <img src="team8-logo.png" alt="Team 8 Logo">
-            </div>
-            <div class="team-info">
-                <div class="team-name">Sayaane</div>
-                <div class="team-score">100</div>
-            </div>
-        </div>
+    <!-- Team boxes will be generated here -->
     </div>
 </div>
 
@@ -200,18 +129,46 @@
         return colors[index % colors.length];
     }
 
-    // Fetch buzzers every 1 second
-    setInterval(fetchBuzzers, 1000);
+    //Team Scores
+    // Corrected the class name to match the HTML
+    const teamsContainer = document.querySelector('.teams-container');
+
+    const teams = [
+        { name: 'Deewane', score: 0 },
+        { name: 'Parwaane', score: 0 },
+        { name: 'Mastaane', score: 0 },
+        { name: 'Afsaane', score: 0 },
+        { name: 'Taraane', score: 0 },
+        { name: 'Anjaane', score: 0 },
+        { name: 'Suhaane', score: 0 },
+        { name: 'Sayaane', score: 0 }
+    ];
+
+    teams.forEach((team, index) => {
+        const teamBox = document.createElement('div');
+        teamBox.className = 'team-box';
+        teamBox.innerHTML = `
+        <div class="team-logo">
+            <img src="team${index + 1}-logo.png" alt="Team ${index + 1} Logo">
+        </div>
+        <div class="team-info">
+            <div class="team-name">${team.name}</div>
+            <div class="team-score" id="score-${index}">${team.score}</div>
+        </div>
+    `;
+        teamsContainer.appendChild(teamBox);
+    });
 
     async function fetchScores() {
         try {
             const response = await fetch('http://localhost:8080/scores');
             const scores = await response.json();
 
-            for (const [team, score] of Object.entries(scores)) {
-                const teamElement = document.querySelector(`.team-name:contains(${team})`);
-                if (teamElement) {
-                    const scoreElement = teamElement.nextElementSibling;
+            for (const [teamName, score] of Object.entries(scores)) {
+                const team = teams.find(t => t.name === teamName);
+                if (team) {
+                    team.score = score;
+                    const scoreElement = document.getElementById(`score-${teams.indexOf(team)}`);
                     if (scoreElement) {
                         scoreElement.innerText = score;
                     }
@@ -222,6 +179,8 @@
         }
     }
 
+    // Fetch buzzers every 1 second
+    setInterval(fetchBuzzers, 1000);
     // Fetch scores every 2 seconds
     setInterval(fetchScores, 2000);
 </script>

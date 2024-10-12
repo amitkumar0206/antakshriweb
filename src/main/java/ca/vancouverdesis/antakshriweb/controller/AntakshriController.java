@@ -70,7 +70,7 @@ public class AntakshriController {
     }
 
     @PostMapping("/submit-scores")
-    public String submitScores(Model model, Scores scores) {
+    public String submitScores(@RequestBody Scores scores) {
         antakshriService.submitScores(scores);
         return "admin";
     }

@@ -23,6 +23,15 @@ public class AntakshriService {
                 Comparator.comparingLong(v -> v.toInstant().toEpochMilli()));
         playerMap = new ConcurrentSkipListMap<>(
                 Comparator.comparingLong(v -> v.toInstant().toEpochMilli()));
+        scores = new HashMap<>();
+        scores.put("Deewane", 0);
+        scores.put("Parwane", 0);
+        scores.put("Mastane", 0);
+        scores.put("Afsane", 0);
+        scores.put("Taraane", 0);
+        scores.put("Anjaane", 0);
+        scores.put("Suhaane", 0);
+        scores.put("Sayaane", 0);
     }
 
     public void addBuzzer(Buzzer buzzer) {
@@ -35,6 +44,7 @@ public class AntakshriService {
 
     public void resetBuzzer() {
         audienceMap.clear();
+        playerMap.clear();
     }
 
     public Map<String, Map<Integer, Buzzer>> getBuzzers() {
