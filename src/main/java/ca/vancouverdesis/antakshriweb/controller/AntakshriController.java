@@ -1,6 +1,7 @@
 package ca.vancouverdesis.antakshriweb.controller;
 
 import ca.vancouverdesis.antakshriweb.domain.Buzzer;
+import ca.vancouverdesis.antakshriweb.domain.Scores;
 import ca.vancouverdesis.antakshriweb.service.AntakshriService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,8 +58,26 @@ public class AntakshriController {
 
     @GetMapping("/antakshri")
     public String antakshri(Model model) {
-        model.addAttribute("message", "Welcome to Antakshri");
+        model.addAttribute("message", "Happy Diwali!");
         return "antakshri";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute("message", "Admin");
+        model.addAttribute("scores", new Scores());
+        return "admin";
+    }
+
+    @PostMapping("/submit-scores")
+    public String submitScores(Model model, Scores scores) {
+        antakshriService.submitScores(scores);
+        return "admin";
+    }
+
+    @GetMapping("/scores")
+    @ResponseBody
+    public Map<String, Integer> getScores() {
+        return antakshriService.getScores();
+    }
 }

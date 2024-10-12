@@ -1,6 +1,8 @@
 package ca.vancouverdesis.antakshriweb.service;
 
 import ca.vancouverdesis.antakshriweb.domain.Buzzer;
+import ca.vancouverdesis.antakshriweb.domain.Scores;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -13,6 +15,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class AntakshriService {
     private ConcurrentSkipListMap<ZonedDateTime, Buzzer> audienceMap;
     private ConcurrentSkipListMap<ZonedDateTime, Buzzer> playerMap;
+    @Getter
+    private Map<String, Integer> scores;
+
     public AntakshriService() {
         audienceMap = new ConcurrentSkipListMap<>(
                 Comparator.comparingLong(v -> v.toInstant().toEpochMilli()));
@@ -49,5 +54,9 @@ public class AntakshriService {
         returnMap.put("PLAYER", buzzerMap);
 
         return returnMap;
+    }
+
+    public void submitScores(Scores teamScore) {
+        scores.put(teamScore.getTeamName(), teamScore.getScore());
     }
 }

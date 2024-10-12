@@ -8,83 +8,123 @@
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">LOGO</div>
-        <div class="title"><h2 th:text="${message}"></h2></div>
-        <div class="spacer"></div>
+<div class="header">
+    <div class="title">
+        <h1 th:text="${message}"></h1>
     </div>
+</div>
 
-    <div class="container">
-        <div class="teams-container">
-            <!-- Team Boxes -->
-            <div class="team-box">
-                <div class="team-name">Team 1</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
+<div class="container">
+    <div class="teams-container">
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team1-logo.png" alt="Team 1 Logo">
             </div>
-            <div class="team-box">
-                <div class="team-name">Team 2</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 3</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 4</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 5</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 6</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 7</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
-            </div>
-            <div class="team-box">
-                <div class="team-name">Team 8</div>
-                <div class="team-logo">Logo</div>
-                <div class="team-score">Score</div>
+            <div class="team-info">
+                <div class="team-name">Deewane</div>
+                <div class="team-score">100</div>
             </div>
         </div>
-
-        <div class="audience-box">
-            <div class="audience-title">Audience</div>
-            <ul class="audience-list">
-                <li>Audience 1</li>
-                <li>Audience 2</li>
-                <li>Audience 3</li>
-                <li>Audience 4</li>
-                <li>Audience 5</li>
-            </ul>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team2-logo.png" alt="Team 2 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Parwaane</div>
+                <div class="team-score">400</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team3-logo.png" alt="Team 3 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Mastaane</div>
+                <div class="team-score">400</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team4-logo.png" alt="Team 4 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Afsaane</div>
+                <div class="team-score">350</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team5-logo.png" alt="Team 5 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Taraane</div>
+                <div class="team-score">100</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team6-logo.png" alt="Team 6 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Anjaane</div>
+                <div class="team-score">100</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team7-logo.png" alt="Team 7 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Suhaane</div>
+                <div class="team-score">100</div>
+            </div>
+        </div>
+        <div class="team-box">
+            <div class="team-logo">
+                <img src="team8-logo.png" alt="Team 8 Logo">
+            </div>
+            <div class="team-info">
+                <div class="team-name">Sayaane</div>
+                <div class="team-score">100</div>
+            </div>
         </div>
     </div>
-    <div class="buzzers-container">
-        <div class="buzzers-title">BUZZERS</div>
+</div>
+
+<div class="buzzers-wrapper">
+    <div class="logo-box">
+        <div class="images-container">
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+        </div>
+    </div>
+    <div class="buzzers-box">
         <div class="buzzers-boxes">
-            <div class="buzzer-list" id="buzzer-list-player">
-                <div class="buzzer-list-header">PLAYERS</div>
-                <div class="buzzer-list-title">Top 5 Buzzers by Players</div>
-                <!-- Buzzer items will be appended here -->
-            </div>
-            <div class="buzzer-list" id="buzzer-list-audience">
-                <div class="buzzer-list-header">AUDIENCE</div>
-                <div class="buzzer-list-title">Top 5 Buzzers by Audience</div>
-                <!-- Buzzer items will be appended here -->
+            <div class="buzzers-header">BUZZERS</div>
+            <div class="buzzer-lists">
+                <div class="buzzer-list" id="buzzer-list-player">
+                    <div class="buzzer-list-header">PLAYERS</div>
+                    <div class="buzzer-list-title">Top 5 Buzzers by Players</div>
+                    <!-- Buzzer items will be appended here -->
+                </div>
+                <div class="buzzer-list" id="buzzer-list-audience">
+                    <div class="buzzer-list-header">AUDIENCE</div>
+                    <div class="buzzer-list-title">Top 5 Buzzers by Audience</div>
+                    <!-- Buzzer items will be appended here -->
+                </div>
             </div>
         </div>
     </div>
+    <div class="qr-code-box">
+        <div class="images-container">
+            <div class="qr-code">
+                <img src="qrcode.png" alt="QR Code">
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 <script>
@@ -162,4 +202,26 @@
 
     // Fetch buzzers every 1 second
     setInterval(fetchBuzzers, 1000);
+
+    async function fetchScores() {
+        try {
+            const response = await fetch('http://localhost:8080/scores');
+            const scores = await response.json();
+
+            for (const [team, score] of Object.entries(scores)) {
+                const teamElement = document.querySelector(`.team-name:contains(${team})`);
+                if (teamElement) {
+                    const scoreElement = teamElement.nextElementSibling;
+                    if (scoreElement) {
+                        scoreElement.innerText = score;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching scores:', error);
+        }
+    }
+
+    // Fetch scores every 2 seconds
+    setInterval(fetchScores, 2000);
 </script>
