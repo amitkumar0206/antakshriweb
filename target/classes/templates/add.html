@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Antakshri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    img {
+      max-width: 10%;
+      height: auto;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo" />
+  <h1>Welcome to Antakshri</h1>
+</header>
+
+<form action="#" th:action="@{/register}" th:object="${buzzer}" method="post">
+  <label for="team-name">Select Team Name:</label>
+  <select id="team-name" name="team-name" th:field="*{teamName}">
+    <option value="">--Select a Team--</option>
+    <option value="AUDIENCE">Audience</option>
+    <option value="DEEWANE">Deewane</option>
+    <option value="PARWANE">Parwane</option>
+    <option value="MASTAANE">Mastaane</option>
+    <option value="AFSANE">Afsane</option>
+    <option value="TARAANE">Taraane</option>
+    <option value="ANJAANE">Anjaane</option>
+    <option value="SUHAANE">Suhaane</option>
+    <option value="SAYAANE">Sayaane</option>
+  </select>
+
+  <label for="person-name">Your Name:</label>
+  <input type="text" th:field="*{personName}" id="person-name" name="person-name" required placeholder="Enter your name">
+
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

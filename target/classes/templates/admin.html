@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Scores</title>
+  <style>
+    .team-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin: 10px;
+      background-color: #f9f9f9;
+    }
+    .team-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .score {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .buttons button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .large-button {
+      padding: 20px 40px;
+      font-size: 20px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
+      gap: 10px; /* Space between boxes */
+    }
+  </style>
+</head>
+<body>
+<div id="teams-container" class="grid-container">
+  <!-- Team boxes will be generated here -->
+</div>
+<div class="actions">
+  <button id="reset-buzzer" class="large-button">Reset Buzzer</button>
+</div>
+
+<script>
+  const teams = [
+    { name: 'Deewane', score: 0 },
+    { name: 'Parwaane', score: 0 },
+    { name: 'Mastaane', score: 0 },
+    { name: 'Afsaane', score: 0 },
+    { name: 'Taraane', score: 0 },
+    { name: 'Anjaane', score: 0 },
+    { name: 'Suhaane', score: 0 },
+    { name: 'Sayaane', score: 0 }
+  ];
+
+  const teamsContainer = document.getElementById('teams-container');
+
+  teams.forEach((team, index) => {
+    const teamBox = document.createElement('div');
+    teamBox.className = 'team-box';
+    teamBox.innerHTML = `
+                <div class="team-name">${team.name}</div>
+                <div class="score" id="score-${index}">${team.score}</div>
+                <div class="buttons">
+                    <button onclick="changeScore(${index}, 50)">+50</button>
+                    <button onclick="changeScore(${index}, -50)">-50</button>
+                </div>
+            `;
+    teamsContainer.appendChild(teamBox);
+  });
+
+  function changeScore(index, delta) {
+    teams[index].score += delta;
+    document.getElementById(`score-${index}`).innerText = teams[index].score;
+
+    const scoreData = {
+      teamName: teams[index].name,
+      score: teams[index].score
+    };
+
+    fetch('http://localhost:8080/submit-scores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(scoreData)
+    })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+  }
+
+  document.getElementById('reset-buzzer').addEventListener('click', () => {
+    fetch('http://localhost:8080/reset', {
+      method: 'GET'
+    })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+  });
+</script>
+</body>
+</html>
