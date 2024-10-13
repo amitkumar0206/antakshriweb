@@ -12,6 +12,11 @@
     <div class="title">
         <h1 th:text="${message}"></h1>
     </div>
+    <div class="logo-box">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+    </div>
 </div>
 
 <div class="container">
@@ -21,13 +26,6 @@
 </div>
 
 <div class="buzzers-wrapper">
-    <div class="logo-box">
-        <div class="images-container">
-            <div class="logo">
-                <img src="logo.png" alt="Logo">
-            </div>
-        </div>
-    </div>
     <div class="buzzers-box">
         <div class="buzzers-boxes">
             <div class="buzzers-header">BUZZERS</div>
@@ -35,21 +33,57 @@
                 <div class="buzzer-list" id="buzzer-list-player">
                     <div class="buzzer-list-header">PLAYERS</div>
                     <div class="buzzer-list-title">Top 5 Buzzers by Players</div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">1</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Parwaane Amit</div>
+                        </div>
+                    </div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">2</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Mastaane Ekta</div>
+                        </div>
+                    </div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">3</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Afsaane Avi</div>
+                        </div>
+                    </div>
                     <!-- Buzzer items will be appended here -->
                 </div>
                 <div class="buzzer-list" id="buzzer-list-audience">
                     <div class="buzzer-list-header">AUDIENCE</div>
                     <div class="buzzer-list-title">Top 5 Buzzers by Audience</div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">1</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Parwaane Amit</div>
+                        </div>
+                    </div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">2</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Mastaane Ekta</div>
+                        </div>
+                    </div>
+                    <div class = buzzer-item>
+                        <div class="sequence-box">3</div>
+                        <div class="details-box">
+                            <div class="buzzer-team-name">Afsaane Avi</div>
+                        </div>
+                    </div>
                     <!-- Buzzer items will be appended here -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="qr-code-box">
-        <div class="images-container">
-            <div class="qr-code">
-                <img src="qrcode.png" alt="QR Code">
-            </div>
+</div>
+<div class="qr-code-box">
+    <div class="images-container">
+        <div class="qr-code">
+            <img src="qrcode.png" alt="QR Code">
         </div>
     </div>
 </div>
@@ -58,70 +92,69 @@
 </html>
 <script>
     async function fetchBuzzers() {
-        try {
-            const response = await fetch('http://localhost:8080/buzzers');
-            const buzzers = await response.json();
-
-            const buzzerListPlayer = document.getElementById('buzzer-list-player');
-            const buzzerListAudience = document.getElementById('buzzer-list-audience');
-            buzzerListPlayer.innerHTML = ''; // Clear the list
-            buzzerListAudience.innerHTML = ''; // Clear the list
-
-            // Append headers
-            const playerHeader = document.createElement('div');
-            playerHeader.className = 'buzzer-list-header';
-            playerHeader.innerText = 'PLAYERS';
-            buzzerListPlayer.appendChild(playerHeader);
-
-            const audienceHeader = document.createElement('div');
-            audienceHeader.className = 'buzzer-list-header';
-            audienceHeader.innerText = 'AUDIENCE';
-            buzzerListAudience.appendChild(audienceHeader);
-
-            // Check and append buzzers for players
-            if (Object.keys(buzzers["PLAYER"]).length === 0) {
-                const noBuzzersMessage = document.createElement('div');
-                noBuzzersMessage.className = 'no-buzzers-message';
-                noBuzzersMessage.innerText = 'Incoming Buzzers';
-                buzzerListPlayer.appendChild(noBuzzersMessage);
-            } else {
-                Object.keys(buzzers["PLAYER"]).slice(0, 5).forEach((key, index) => {
-                    const buzzerItem = document.createElement('div');
-                    buzzerItem.className = 'buzzer-item';
-                    buzzerItem.innerHTML = `
-                    <div class="sequence-box" style="background-color: ${getUniqueColor(index)};">${key}</div>
-                    <div class="details-box">
-                        <div class="team-name">${buzzers["PLAYER"][key].teamName}</div>
-                        <div class="player-name">${buzzers["PLAYER"][key].personName}</div>
-                    </div>
-                `;
-                    buzzerListPlayer.appendChild(buzzerItem);
-                });
-            }
-
-            // Check and append buzzers for audience
-            if (Object.keys(buzzers["AUDIENCE"]).length === 0) {
-                const noBuzzersMessage = document.createElement('div');
-                noBuzzersMessage.className = 'no-buzzers-message';
-                noBuzzersMessage.innerText = 'Incoming Buzzers';
-                buzzerListAudience.appendChild(noBuzzersMessage);
-            } else {
-                Object.keys(buzzers["AUDIENCE"]).slice(0, 5).forEach((key, index) => {
-                    const buzzerItem = document.createElement('div');
-                    buzzerItem.className = 'buzzer-item';
-                    buzzerItem.innerHTML = `
-                    <div class="sequence-box" style="background-color: ${getUniqueColor(index)};">${key}</div>
-                    <div class="details-box">
-                        <div class="team-name">${buzzers["AUDIENCE"][key].teamName}</div>
-                        <div class="player-name">${buzzers["AUDIENCE"][key].personName}</div>
-                    </div>
-                `;
-                    buzzerListAudience.appendChild(buzzerItem);
-                });
-            }
-        } catch (error) {
-            console.error('Error fetching buzzers:', error);
-        }
+        //try {
+        //     const response = await fetch('http://localhost:8080/buzzers');
+        //     const buzzers = await response.json();
+        //
+        //     const buzzerListPlayer = document.getElementById('buzzer-list-player');
+        //     const buzzerListAudience = document.getElementById('buzzer-list-audience');
+        //     buzzerListPlayer.innerHTML = ''; // Clear the list
+        //     buzzerListAudience.innerHTML = ''; // Clear the list
+        //
+        //     // Append headers
+        //     const playerHeader = document.createElement('div');
+        //     playerHeader.className = 'buzzer-list-header';
+        //     playerHeader.innerText = 'PLAYERS';
+        //     buzzerListPlayer.appendChild(playerHeader);
+        //
+        //     const audienceHeader = document.createElement('div');
+        //     audienceHeader.className = 'buzzer-list-header';
+        //     audienceHeader.innerText = 'AUDIENCE';
+        //     buzzerListAudience.appendChild(audienceHeader);
+        //
+        //     // Check and append buzzers for players
+        //     if (Object.keys(buzzers["PLAYER"]).length === 0) {
+        //         const noBuzzersMessage = document.createElement('div');
+        //         noBuzzersMessage.className = 'no-buzzers-message';
+        //         noBuzzersMessage.innerText = 'Incoming Buzzers';
+        //         buzzerListPlayer.appendChild(noBuzzersMessage);
+        //     } else {
+        //         Object.keys(buzzers["PLAYER"]).slice(0, 5).forEach((key, index) => {
+        //             const buzzerItem = document.createElement('div');
+        //             buzzerItem.className = 'buzzer-item';
+        //             buzzerItem.innerHTML = `
+        //             <div class="sequence-box">${key}</div>
+        //             <div class="details-box">
+        //                 <div class="buzzer-team-name">${buzzers["PLAYER"][key].teamName} ${buzzers["PLAYER"][key].personName}</div>
+        //             </div>
+        //         `;
+        //             buzzerListPlayer.appendChild(buzzerItem);
+        //         });
+        //     }
+        //
+        //     // Check and append buzzers for audience
+        //     if (Object.keys(buzzers["AUDIENCE"]).length === 0) {
+        //         const noBuzzersMessage = document.createElement('div');
+        //         noBuzzersMessage.className = 'no-buzzers-message';
+        //         noBuzzersMessage.innerText = 'Incoming Buzzers';
+        //         buzzerListAudience.appendChild(noBuzzersMessage);
+        //     } else {
+        //         Object.keys(buzzers["AUDIENCE"]).slice(0, 5).forEach((key, index) => {
+        //             const buzzerItem = document.createElement('div');
+        //             buzzerItem.className = 'buzzer-item';
+        //             buzzerItem.innerHTML = `
+        //             <div class="sequence-box" style="background-color: ${getUniqueColor(index)};">${key}</div>
+        //             <div class="details-box">
+        //                 <div class="team-name">${buzzers["AUDIENCE"][key].teamName}</div>
+        //                 <div class="player-name">${buzzers["AUDIENCE"][key].personName}</div>
+        //             </div>
+        //         `;
+        //             buzzerListAudience.appendChild(buzzerItem);
+        //         });
+        //     }
+        // } catch (error) {
+        //     console.error('Error fetching buzzers:', error);
+        // }
     }
 
     function getUniqueColor(index) {
@@ -148,11 +181,9 @@
         const teamBox = document.createElement('div');
         teamBox.className = 'team-box';
         teamBox.innerHTML = `
-        <div class="team-logo">
-            <img src="team${index + 1}-logo.png" alt="Team ${index + 1} Logo">
-        </div>
         <div class="team-info">
             <div class="team-name">${team.name}</div>
+            <hr class="hr" />
             <div class="team-score" id="score-${index}">${team.score}</div>
         </div>
     `;

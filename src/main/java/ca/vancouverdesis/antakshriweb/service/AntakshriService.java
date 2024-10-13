@@ -48,20 +48,37 @@ public class AntakshriService {
     }
 
     public Map<String, Map<Integer, Buzzer>> getBuzzers() {
+//        Map<String, Map<Integer, Buzzer>> returnMap = new HashMap<>();
+//        Map<Integer, Buzzer> buzzerMap = new HashMap<>();
+//        Map<Integer, Buzzer> finalBuzzerMap = buzzerMap;
+//        audienceMap.values().stream().toList().forEach(buzzer -> {
+//            finalBuzzerMap.put(finalBuzzerMap.size() + 1, buzzer);
+//        });
+//        returnMap.put("AUDIENCE", buzzerMap);
+//
+//        buzzerMap = new HashMap<>();
+//        Map<Integer, Buzzer> finalBuzzerMap1 = buzzerMap;
+//        playerMap.values().stream().toList().forEach(buzzer -> {
+//            finalBuzzerMap1.put(finalBuzzerMap1.size() + 1, buzzer);
+//        });
+//        returnMap.put("PLAYER", buzzerMap);
+
         Map<String, Map<Integer, Buzzer>> returnMap = new HashMap<>();
         Map<Integer, Buzzer> buzzerMap = new HashMap<>();
-        Map<Integer, Buzzer> finalBuzzerMap = buzzerMap;
-        audienceMap.values().stream().toList().forEach(buzzer -> {
-            finalBuzzerMap.put(finalBuzzerMap.size() + 1, buzzer);
-        });
+        buzzerMap.put(1, new Buzzer("AUDIENCE", "Rahul"));
+        buzzerMap.put(2, new Buzzer("AUDIENCE", "Amit"));
+        buzzerMap.put(3, new Buzzer("AUDIENCE", "Avi"));
+        buzzerMap.put(4, new Buzzer("AUDIENCE", "Ekta"));
+        buzzerMap.put(5, new Buzzer("AUDIENCE", "Vipin"));
         returnMap.put("AUDIENCE", buzzerMap);
 
-        buzzerMap = new HashMap<>();
-        Map<Integer, Buzzer> finalBuzzerMap1 = buzzerMap;
-        playerMap.values().stream().toList().forEach(buzzer -> {
-            finalBuzzerMap1.put(finalBuzzerMap1.size() + 1, buzzer);
-        });
-        returnMap.put("PLAYER", buzzerMap);
+        Map<Integer, Buzzer> playBuzzer = new HashMap<>();
+        playBuzzer.put(1, new Buzzer("AUDIENCE", "Rahul"));
+        playBuzzer.put(2, new Buzzer("AUDIENCE", "Amit"));
+        playBuzzer.put(3, new Buzzer("AUDIENCE", "Avi"));
+        playBuzzer.put(4, new Buzzer("AUDIENCE", "Ekta"));
+        playBuzzer.put(5, new Buzzer("AUDIENCE", "Vipin"));
+        returnMap.put("PLAYER", playBuzzer);
 
         return returnMap;
     }
