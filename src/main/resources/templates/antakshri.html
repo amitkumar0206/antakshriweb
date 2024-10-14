@@ -17,14 +17,14 @@
 <div class="buzzers-wrapper">
     <div class="buzzers-box">
         <div class="buzzers-boxes">
-            <div class="buzzers-header">BUZZERS</div>
+            <div class="buzzers-header">TOP 5 BUZZERS</div>
             <div class="buzzer-lists">
                 <div class="buzzer-list" id="buzzer-list-player">
-                    <div class="buzzer-list-header">PLAYERS (Top 5 Buzzers by Players)</div>
+                    <div class="buzzer-list-header">PLAYERS</div>
                     <!-- Buzzer items will be appended here -->
                 </div>
                 <div class="buzzer-list" id="buzzer-list-audience">
-                    <div class="buzzer-list-header">AUDIENCE (Top 5 Buzzers by Audience)</div>
+                    <div class="buzzer-list-header">AUDIENCE</div>
                     <!-- Buzzer items will be appended here -->
                 </div>
             </div>
@@ -39,6 +39,7 @@
         try {
             const response = await fetch('http://localhost:8080/buzzers');
             const buzzers = await response.json();
+            let ribbon = "";
 
             const buzzerListPlayer = document.getElementById('buzzer-list-player');
             const buzzerListAudience = document.getElementById('buzzer-list-audience');
@@ -67,15 +68,19 @@
                     const buzzerItem = document.createElement('div');
                     if(key === "1") {
                         buzzerItem.className = 'buzzer-item-winner';
+                        ribbon = '<img class="gold-medal" src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true" alt="gold medal"/>';
                     } else {
                         buzzerItem.className = 'buzzer-item';
+                        ribbon = '';
                     }
                     buzzerItem.innerHTML = `
                         <div class="sequence-box">${key}</div>
                         <div class="details-box">
                             <div class="buzzer-team">
                                 <div class="buzzer-team-name">${buzzers["PLAYER"][key].teamName}</div>
-                                <div class="buzzer-player-name">${buzzers["PLAYER"][key].personName}</div>
+                                <div class="buzzer-player-name">${buzzers["PLAYER"][key].personName}
+                                </div>
+                                ${ribbon}
                             </div>
                         </div>
                     `;
@@ -94,14 +99,17 @@
                     const buzzerItem = document.createElement('div');
                     if(key === "1") {
                         buzzerItem.className = 'buzzer-item-winner';
+                        ribbon = '<div class="buzzer-winner-ribbon"><img class="gold-medal" src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true" alt="gold medal"/></div>';
                     } else {
                         buzzerItem.className = 'buzzer-item';
+                        ribbon = '';
                     }
                     buzzerItem.innerHTML = `
                     <div class="sequence-box">${key}</div>
                     <div class="details-box">
                         <div class="buzzer-team">
-                            <div class="buzzer-player-name">${buzzers["AUDIENCE"][key].personName}</div>
+                            <div class="buzzer-audience-name">${buzzers["AUDIENCE"][key].personName}</div>
+                            ${ribbon}
                         </div>
                     </div>
                 `;
