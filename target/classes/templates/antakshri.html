@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="antakshri.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="teams-container">
+    <!-- Team boxes will be generated here -->
+    </div>
+</div>
+
+<div class="buzzers-wrapper">
+    <div class="buzzers-box">
+        <div class="buzzers-boxes">
+            <div class="buzzers-header">TOP 5 BUZZERS</div>
+            <div class="buzzer-lists">
+                <div class="buzzer-list" id="buzzer-list-player">
+                    <div class="buzzer-list-header">PLAYERS</div>
+                    <!-- Buzzer items will be appended here -->
+                </div>
+                <div class="buzzer-list" id="buzzer-list-audience">
+                    <div class="buzzer-list-header">AUDIENCE</div>
+                    <!-- Buzzer items will be appended here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    async function fetchBuzzers() {
+        try {
+            const response = await fetch('http://localhost:8080/buzzers');
+            const buzzers = await response.json();
+            let ribbon = "";
+
+            const buzzerListPlayer = document.getElementById('buzzer-list-player');
+            const buzzerListAudience = document.getElementById('buzzer-list-audience');
+            buzzerListPlayer.innerHTML = ''; // Clear the list
+            buzzerListAudience.innerHTML = ''; // Clear the list
+
+            // Append headers
+            const playerHeader = document.createElement('div');
+            playerHeader.className = 'buzzer-list-header';
+            playerHeader.innerText = 'PLAYERS';
+            buzzerListPlayer.appendChild(playerHeader);
+
+            const audienceHeader = document.createElement('div');
+            audienceHeader.className = 'buzzer-list-header';
+            audienceHeader.innerText = 'AUDIENCE';
+            buzzerListAudience.appendChild(audienceHeader);
+
+            // Check and append buzzers for players
+            if (Object.keys(buzzers["PLAYER"]).length === 0) {
+                const noBuzzersMessage = document.createElement('div');
+                noBuzzersMessage.className = 'no-buzzers-message';
+                noBuzzersMessage.innerText = 'Incoming Buzzers';
+                buzzerListPlayer.appendChild(noBuzzersMessage);
+            } else {
+                Object.keys(buzzers["PLAYER"]).slice(0, 5).forEach((key, index) => {
+                    const buzzerItem = document.createElement('div');
+                    if(key === "1") {
+                        buzzerItem.className = 'buzzer-item-winner';
+                        ribbon = '<img class="gold-medal" src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true" alt="gold medal"/>';
+                    } else {
+                        buzzerItem.className = 'buzzer-item';
+                        ribbon = '';
+                    }
+                    buzzerItem.innerHTML = `
+                        <div class="sequence-box">${key}</div>
+                        <div class="details-box">
+                            <div class="buzzer-team">
+                                <div class="buzzer-team-name">${buzzers["PLAYER"][key].teamName}</div>
+                                <div class="buzzer-player-name">${buzzers["PLAYER"][key].personName}
+                                </div>
+                                ${ribbon}
+                            </div>
+                        </div>
+                    `;
+                    buzzerListPlayer.appendChild(buzzerItem);
+                });
+            }
+
+            // Check and append buzzers for audience
+            if (Object.keys(buzzers["AUDIENCE"]).length === 0) {
+                const noBuzzersMessage = document.createElement('div');
+                noBuzzersMessage.className = 'no-buzzers-message';
+                noBuzzersMessage.innerText = 'Incoming Buzzers';
+                buzzerListAudience.appendChild(noBuzzersMessage);
+            } else {
+                Object.keys(buzzers["AUDIENCE"]).slice(0, 5).forEach((key, index) => {
+                    const buzzerItem = document.createElement('div');
+                    if(key === "1") {
+                        buzzerItem.className = 'buzzer-item-winner';
+                        ribbon = '<div class="buzzer-winner-ribbon"><img class="gold-medal" src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true" alt="gold medal"/></div>';
+                    } else {
+                        buzzerItem.className = 'buzzer-item';
+                        ribbon = '';
+                    }
+                    buzzerItem.innerHTML = `
+                    <div class="sequence-box">${key}</div>
+                    <div class="details-box">
+                        <div class="buzzer-team">
+                            <div class="buzzer-audience-name">${buzzers["AUDIENCE"][key].personName}</div>
+                            ${ribbon}
+                        </div>
+                    </div>
+                `;
+                    buzzerListAudience.appendChild(buzzerItem);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching buzzers:', error);
+        }
+    }
+
+    //Team Scores
+    // Corrected the class name to match the HTML
+    const teamsContainer = document.querySelector('.teams-container');
+
+    const teams = [
+        { name: 'Deewane', score: 0 },
+        { name: 'Parwaane', score: 0 },
+        { name: 'Mastaane', score: 0 },
+        { name: 'Afsaane', score: 0 },
+        { name: 'Taraane', score: 0 },
+        { name: 'Anjaane', score: 0 },
+        { name: 'Suhaane', score: 0 },
+        { name: 'Sayaane', score: 0 }
+    ];
+
+    teams.forEach((team, index) => {
+        const teamBox = document.createElement('div');
+        teamBox.className = 'team-box';
+        teamBox.innerHTML = `
+        <div class="team-info">
+            <div class="team-name">${team.name}</div>
+            <hr class="hr" />
+            <div class="team-score" id="score-${index}">${team.score}</div>
+        </div>
+    `;
+        teamsContainer.appendChild(teamBox);
+    });
+
+    async function fetchScores() {
+        try {
+            const response = await fetch('http://localhost:8080/scores');
+            const scores = await response.json();
+
+            for (const [teamName, score] of Object.entries(scores)) {
+                const team = teams.find(t => t.name === teamName);
+                if (team) {
+                    team.score = score;
+                    const scoreElement = document.getElementById(`score-${teams.indexOf(team)}`);
+                    if (scoreElement) {
+                        scoreElement.innerText = score;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching scores:', error);
+        }
+    }
+
+    // Fetch buzzers every 1 second
+    setInterval(fetchBuzzers, 1000);
+    // Fetch scores every 2 seconds
+    setInterval(fetchScores, 2000);
+</script>

@@ -1,0 +1,6 @@
+ca/vancouverdesis/antakshriweb/controller/AntakshriController.class
+ca/vancouverdesis/antakshriweb/domain/Buzzer.class
+ca/vancouverdesis/antakshriweb/AntakshriwebApplication.class
+ca/vancouverdesis/antakshriweb/ServletInitializer.class
+ca/vancouverdesis/antakshriweb/domain/Scores.class
+ca/vancouverdesis/antakshriweb/service/AntakshriService.class
