@@ -58,7 +58,7 @@ public class AntakshriController {
 
     @GetMapping("/antakshri")
     public String antakshri(Model model) {
-        model.addAttribute("message", "Happy Diwali!");
+        model.addAttribute("message", "Happy Diwali");
         return "antakshri";
     }
 

@@ -62,7 +62,6 @@ public class AntakshriService {
             finalBuzzerMap1.put(finalBuzzerMap1.size() + 1, buzzer);
         });
         returnMap.put("PLAYER", buzzerMap);
-
         return returnMap;
     }
 

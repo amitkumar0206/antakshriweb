@@ -8,12 +8,6 @@
 </head>
 <body>
 
-<div class="header">
-    <div class="title">
-        <h1 th:text="${message}"></h1>
-    </div>
-</div>
-
 <div class="container">
     <div class="teams-container">
     <!-- Team boxes will be generated here -->
@@ -21,34 +15,18 @@
 </div>
 
 <div class="buzzers-wrapper">
-    <div class="logo-box">
-        <div class="images-container">
-            <div class="logo">
-                <img src="logo.png" alt="Logo">
-            </div>
-        </div>
-    </div>
     <div class="buzzers-box">
         <div class="buzzers-boxes">
             <div class="buzzers-header">BUZZERS</div>
             <div class="buzzer-lists">
                 <div class="buzzer-list" id="buzzer-list-player">
-                    <div class="buzzer-list-header">PLAYERS</div>
-                    <div class="buzzer-list-title">Top 5 Buzzers by Players</div>
+                    <div class="buzzer-list-header">PLAYERS (Top 5 Buzzers by Players)</div>
                     <!-- Buzzer items will be appended here -->
                 </div>
                 <div class="buzzer-list" id="buzzer-list-audience">
-                    <div class="buzzer-list-header">AUDIENCE</div>
-                    <div class="buzzer-list-title">Top 5 Buzzers by Audience</div>
+                    <div class="buzzer-list-header">AUDIENCE (Top 5 Buzzers by Audience)</div>
                     <!-- Buzzer items will be appended here -->
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="qr-code-box">
-        <div class="images-container">
-            <div class="qr-code">
-                <img src="qrcode.png" alt="QR Code">
             </div>
         </div>
     </div>
@@ -87,14 +65,20 @@
             } else {
                 Object.keys(buzzers["PLAYER"]).slice(0, 5).forEach((key, index) => {
                     const buzzerItem = document.createElement('div');
-                    buzzerItem.className = 'buzzer-item';
+                    if(key === "1") {
+                        buzzerItem.className = 'buzzer-item-winner';
+                    } else {
+                        buzzerItem.className = 'buzzer-item';
+                    }
                     buzzerItem.innerHTML = `
-                    <div class="sequence-box" style="background-color: ${getUniqueColor(index)};">${key}</div>
-                    <div class="details-box">
-                        <div class="team-name">${buzzers["PLAYER"][key].teamName}</div>
-                        <div class="player-name">${buzzers["PLAYER"][key].personName}</div>
-                    </div>
-                `;
+                        <div class="sequence-box">${key}</div>
+                        <div class="details-box">
+                            <div class="buzzer-team">
+                                <div class="buzzer-team-name">${buzzers["PLAYER"][key].teamName}</div>
+                                <div class="buzzer-player-name">${buzzers["PLAYER"][key].personName}</div>
+                            </div>
+                        </div>
+                    `;
                     buzzerListPlayer.appendChild(buzzerItem);
                 });
             }
@@ -108,12 +92,17 @@
             } else {
                 Object.keys(buzzers["AUDIENCE"]).slice(0, 5).forEach((key, index) => {
                     const buzzerItem = document.createElement('div');
-                    buzzerItem.className = 'buzzer-item';
+                    if(key === "1") {
+                        buzzerItem.className = 'buzzer-item-winner';
+                    } else {
+                        buzzerItem.className = 'buzzer-item';
+                    }
                     buzzerItem.innerHTML = `
-                    <div class="sequence-box" style="background-color: ${getUniqueColor(index)};">${key}</div>
+                    <div class="sequence-box">${key}</div>
                     <div class="details-box">
-                        <div class="team-name">${buzzers["AUDIENCE"][key].teamName}</div>
-                        <div class="player-name">${buzzers["AUDIENCE"][key].personName}</div>
+                        <div class="buzzer-team">
+                            <div class="buzzer-player-name">${buzzers["AUDIENCE"][key].personName}</div>
+                        </div>
                     </div>
                 `;
                     buzzerListAudience.appendChild(buzzerItem);
@@ -122,11 +111,6 @@
         } catch (error) {
             console.error('Error fetching buzzers:', error);
         }
-    }
-
-    function getUniqueColor(index) {
-        const colors = ['#ffcc80', '#80d8ff', '#ff8a80', '#ccff90', '#d1c4e9'];
-        return colors[index % colors.length];
     }
 
     //Team Scores
@@ -148,11 +132,9 @@
         const teamBox = document.createElement('div');
         teamBox.className = 'team-box';
         teamBox.innerHTML = `
-        <div class="team-logo">
-            <img src="team${index + 1}-logo.png" alt="Team ${index + 1} Logo">
-        </div>
         <div class="team-info">
             <div class="team-name">${team.name}</div>
+            <hr class="hr" />
             <div class="team-score" id="score-${index}">${team.score}</div>
         </div>
     `;
