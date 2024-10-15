@@ -37,7 +37,7 @@
 <script>
     async function fetchBuzzers() {
         try {
-            const response = await fetch('http://localhost:8080/buzzers');
+            const response = await fetch('/buzzers');
             const buzzers = await response.json();
             let ribbon = "";
 
@@ -151,7 +151,7 @@
 
     async function fetchScores() {
         try {
-            const response = await fetch('http://localhost:8080/scores');
+            const response = await fetch('/scores');
             const scores = await response.json();
 
             for (const [teamName, score] of Object.entries(scores)) {

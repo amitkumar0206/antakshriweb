@@ -94,7 +94,7 @@
       score: teams[index].score
     };
 
-    fetch('http://localhost:8080/submit-scores', {
+    fetch('/submit-scores', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -111,7 +111,7 @@
   }
 
   document.getElementById('reset-buzzer').addEventListener('click', () => {
-    fetch('http://localhost:8080/reset', {
+    fetch('/reset', {
       method: 'GET'
     })
             .then(response => response.json())
