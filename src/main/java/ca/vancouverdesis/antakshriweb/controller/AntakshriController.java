@@ -23,7 +23,6 @@ public class AntakshriController {
     @GetMapping("/buzzers")
     @ResponseBody
     public Map<String, Map<Integer, Buzzer>> getBuzzers() {
-        logger.info("Getting buzzers");
         return antakshriService.getBuzzers();
     }
 
@@ -90,8 +89,13 @@ public class AntakshriController {
     @ResponseBody
     public Map<String, Integer> getScores() {
         Map<String, Integer> scores = antakshriService.getScores();
-        logger.info("Getting scores: entry set" + scores.entrySet() + "!");
-        logger.info("Getting scores: key set" + scores.keySet() + "!");
         return scores;
+    }
+
+    @GetMapping("/reset-scores")
+    public String resetScores() {
+        logger.info("Resetting scores");
+        antakshriService.resetScores();
+        return "admin";
     }
 }

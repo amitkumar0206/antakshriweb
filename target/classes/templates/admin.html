@@ -37,7 +37,12 @@
       justify-content: center;
       margin-top: 20px;
     }
-
+    .actions-red {
+      color: red;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
     .large-button {
       padding: 20px 40px;
       font-size: 20px;
@@ -56,7 +61,9 @@
 <div class="actions">
   <button id="reset-buzzer" class="large-button">Reset Buzzer</button>
 </div>
-
+<div class="actions-red">
+  <button id="reset-scores" class="large-button">Reset Scores</button>
+</div>
 <script>
   const teams = [
     { name: 'Deewane', score: 0 },
@@ -122,6 +129,43 @@
               console.error('Error:', error);
             });
   });
+
+  document.getElementById('reset-scores').addEventListener('click', () => {
+    let text = "Scores will be reset. Are you Sure?";
+    if (confirm(text) === true) {
+      clearScores();
+      fetch('/reset-scores', {
+        method: 'GET'
+      })
+              .then(response => response.json())
+              .then(data => {
+                console.log('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+    }
+    else {
+        console.log('Reset Score cancelled');
+    }
+  });
+
+  async function clearScores() {
+    try {
+      for (const [teamName, score] of Object.entries(teams)) {
+        const team = teams.find(t => t.name === teamName);
+        if (team) {
+          team.score = score;
+          const scoreElement = document.getElementById(`score-${teams.indexOf(team)}`);
+          if (scoreElement) {
+            scoreElement.innerText = score;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error clearing scores:', error);
+    }
+  }
 </script>
 </body>
 </html>
