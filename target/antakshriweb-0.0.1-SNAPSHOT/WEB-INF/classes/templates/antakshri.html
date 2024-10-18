@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,9 +148,26 @@
     `;
         teamsContainer.appendChild(teamBox);
     });
+    async function clearScores() {
+        try {
+            for (const [teamName, score] of Object.entries(teams)) {
+                const team = teams.find(t => t.name === teamName);
+                if (team) {
+                    team.score = score;
+                    const scoreElement = document.getElementById(`score-${teams.indexOf(team)}`);
+                    if (scoreElement) {
+                        scoreElement.innerText = score;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error clearing scores:', error);
+        }
+    }
 
     async function fetchScores() {
         try {
+            await clearScores();
             const response = await fetch('/scores');
             const scores = await response.json();
 
