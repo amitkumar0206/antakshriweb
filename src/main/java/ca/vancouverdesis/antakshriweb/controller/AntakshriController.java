@@ -3,6 +3,7 @@ package ca.vancouverdesis.antakshriweb.controller;
 import ca.vancouverdesis.antakshriweb.domain.Buzzer;
 import ca.vancouverdesis.antakshriweb.domain.Scores;
 import ca.vancouverdesis.antakshriweb.service.AntakshriService;
+import ca.vancouverdesis.antakshriweb.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,34 @@ public class AntakshriController {
         return antakshriService.getBuzzers();
     }
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        logger.info("Home page");
-        model.addAttribute("message", "Register your team");
+    @GetMapping("/player")
+    public String player(Model model) {
+        model.addAttribute("message", "Register yourself on your Team");
         model.addAttribute("buzzer", new Buzzer());
-        return "add";
+        return "player";
+    }
+
+    @GetMapping("/audience")
+    public String audience(Model model) {
+        model.addAttribute("message", "Register yourself as Audience");
+        Buzzer buzzer = new Buzzer();
+        buzzer.setTeamName("AUDIENCE");
+        model.addAttribute("buzzer", buzzer);
+        return "audience";
     }
 
     @PostMapping("/register")
     public String register(Model model, Buzzer buzzer) {
-        logger.info("Registering team : "+ buzzer.getTeamName() + " : " + buzzer.getPersonName());
+        logger.info("Registering team : {} : {}", buzzer.getTeamName(), buzzer.getPersonName());
+        buzzer.setPersonName(StringUtils.toTitleCase(buzzer.getPersonName()));
         model.addAttribute("buzzer", buzzer);
-        model.addAttribute("message", "Welcome " + buzzer.getPersonName() + "!");
+        String text = "Welcome " + buzzer.getPersonName();
+        if("PLAYER".equalsIgnoreCase(buzzer.getTeamName())) {
+           text += " from team " + buzzer.getTeamName();
+        }
+        text+= "!";
+
+        model.addAttribute("message", text);
         return "buzzer";
     }
 

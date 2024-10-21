@@ -19,6 +19,10 @@
       max-width: 40%;
       height: auto;
     }
+    .logo {
+      max-width: 250px;
+      margin-bottom: 60px;
+    }
     form {
       background-color: #fff;
       padding: 20px;
@@ -44,19 +48,45 @@
       background-color: #45a049;
     }
   </style>
+    <script>
+      function validateFields() {
+        const fullName = document.getElementById('person-name').value;
+        const teamName = document.getElementById('team-name').value;
+        const nameErrorDiv = document.getElementById('name-error');
+        const teamErrorDiv = document.getElementById('team-error');
+        const nameRegex = /^[a-zA-Z]{3,} [a-zA-Z]{3,}$/;
+
+        let isValid = true;
+
+        if (!nameRegex.test(fullName)) {
+          nameErrorDiv.innerText = 'Full name must be in the format of minimum 3 characters before and after a space.';
+          isValid = false;
+        } else {
+          nameErrorDiv.innerText = ''; // Clear any previous error message
+        }
+
+        if (teamName === "") {
+          teamErrorDiv.innerText = 'Please select a team.';
+          isValid = false;
+        } else {
+          teamErrorDiv.innerText = ''; // Clear any previous error message
+        }
+
+        return isValid;
+      }
+    </script>
 </head>
 <body>
 
 <header>
-  <img src="logo.png" alt="Logo" />
+  <img src="logo.png" class="logo" alt="Logo" />
   <h1>Welcome to Antakshri</h1>
 </header>
 
-<form action="#" th:action="@{/register}" th:object="${buzzer}" method="post">
+<form action="#" th:action="@{/register}" th:object="${buzzer}" method="post" onsubmit="return validateFields()">
   <label for="team-name">Select Team Name:</label>
   <select id="team-name" name="team-name" th:field="*{teamName}">
-    <option value="">--Select a Team--</option>
-    <option value="Audience">Audience</option>
+    <option value="">---Select a Team---</option>
     <option value="Deewane">Deewane</option>
     <option value="Parwane">Parwane</option>
     <option value="Mastaane">Mastaane</option>
@@ -66,9 +96,11 @@
     <option value="Suhaane">Suhaane</option>
     <option value="Sayaane">Sayaane</option>
   </select>
+  <div id="team-error" style="color: red;"></div>
 
   <label for="person-name">Your Name:</label>
-  <input type="text" th:field="*{personName}" id="person-name" name="person-name" required placeholder="Enter your name">
+  <input type="text" th:field="*{personName}" id="person-name" name="person-name" required placeholder="John Doe">
+  <div id="name-error" style="color: red;"></div>
 
   <input type="submit" value="Submit">
 </form>
