@@ -86,19 +86,19 @@ public class AntakshriController {
         return "antakshri";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/secret")
     public String admin(Model model) {
         logger.info("Admin page");
         model.addAttribute("message", "Admin");
         model.addAttribute("scores", new Scores());
-        return "admin";
+        return "secret";
     }
 
     @PostMapping("/submit-scores")
     public String submitScores(@RequestBody Scores scores) {
         logger.info("Submitting scores: " + scores.getTeamName() + " : " + scores.getScore());
         antakshriService.submitScores(scores);
-        return "admin";
+        return "secret";
     }
 
     @GetMapping("/scores")
@@ -112,6 +112,6 @@ public class AntakshriController {
     public String resetScores() {
         logger.info("Resetting scores");
         antakshriService.resetScores();
-        return "admin";
+        return "secret";
     }
 }

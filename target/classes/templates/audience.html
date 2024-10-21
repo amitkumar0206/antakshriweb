@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Antakshri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    img {
+      max-width: 40%;
+      height: auto;
+    }
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+    function validateFullName() {
+      const fullName = document.getElementById('person-name').value;
+      const regex = /^[a-zA-Z]{3,} [a-zA-Z]{3,}$/;
+      const errorDiv = document.getElementById('name-error');
+
+      if (!regex.test(fullName)) {
+        errorDiv.innerText = 'Full name must be in the format of minimum 3 characters before and after a space.';
+        return false;
+      }
+
+      errorDiv.innerText = ''; // Clear any previous error message
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" class="logo" alt="Logo" />
+  <h1>Welcome to Antakshri</h1>
+</header>
+
+<form action="#" th:action="@{/register}" th:object="${buzzer}" method="post" onsubmit="return validateFullName()">
+  <input type="hidden" th:field="*{teamName}" id="team"/>
+  <label for="person-name">Your Full Name:</label>
+  <input type="text" th:field="*{personName}" id="person-name" name="person-name" required placeholder="John Doe">
+  <div id="name-error" style="color: red;"></div>
+
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
